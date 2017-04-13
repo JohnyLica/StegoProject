@@ -9,5 +9,16 @@ namespace Stego_Sample.Controllers
 {
     public class PostController : ApiController
     {
+        [HttpPost]
+        public void RetrieveImage()
+        {
+            
+        }
+
+        [HttpGet]
+        public void SendImage()
+        {
+            
+        }
     }
 }
