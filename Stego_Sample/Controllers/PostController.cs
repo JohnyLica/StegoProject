@@ -8,18 +8,29 @@ namespace Stego_Sample.Controllers
 {
     public class PostController : ApiController
     {
+        private Bitmap _receivedBitmap;
+
         [HttpPost]
         public void RetrieveImage(Stream stream)
         {
-            
         }
 
         [HttpGet]
-        public void GetImage()
+        public string GetImage()
         {
-            JsonSerializer serializer = new JsonSerializer();
+            var serializer = new JsonSerializer();
             serializer.Converters.Add(new JavaScriptDateTimeConverter());
-            serializer.NullValueHandling = nullva
+            serializer.NullValueHandling = NullValueHandling.Ignore;
+
+            Stream stream = new MemoryStream(ImageToByte(_receivedBitmap));
+            var bmpJson = JsonConvert.SerializeObject(stream);
+            return bmpJson;
+        }
+
+        public static byte[] ImageToByte(Bitmap bmp)
+        {
+            var converter = new ImageConverter();
+            return (byte[]) converter.ConvertTo(bmp, typeof (byte[]));
         }
     }
 }
