@@ -33,8 +33,8 @@ namespace Stego_Sample.Controllers
 			{
 				await Request.Content.ReadAsMultipartAsync(provider);
 				File.Move(provider.FileData[0].LocalFileName, Path.Combine(rootDirectory, $"{message}.jpg"));
-				_receivedBitmap = Bitmap.FromFile($"{message}.jpg"); //TODO google it
-				response.StatusCode = HttpStatusCode.OK;
+				_receivedBitmap = (Bitmap)Image.FromFile($"{message}.jpg"); //TODO google it
+				response.StatusCode = HttpStatusCode.Created;
 				return null;
 			}
 			catch (Exception e)
@@ -42,19 +42,6 @@ namespace Stego_Sample.Controllers
 				return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
 			}
 		}
-		//public void RetrieveImage(byte[] streamBytes, byte[] streamMessage)
-		//      {
-		//          var receivedMessage = Encoding.UTF8.GetString(streamMessage, 0, streamMessage.Length);
-		//          using (var mStream = new MemoryStream())
-		//          {
-		//              mStream.Write(streamBytes, 0, streamBytes.Length);
-		//              mStream.Seek(0, SeekOrigin.Begin);
-		//              var bm = new Bitmap(mStream);
-		//              _receivedBitmap = bm;
-		//          }
-
-		//          SteganographyHelper.MergeText(receivedMessage, _receivedBitmap);
-		//      }
 
 		[HttpGet]
         [Route("getImage")]
