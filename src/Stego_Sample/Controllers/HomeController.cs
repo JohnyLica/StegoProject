@@ -3,16 +3,14 @@ using System.Drawing;
 using System.IO;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
-using System.Web;
-using System.Web.Http;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Stego_Sample.Models;
 
 namespace Stego_Sample.Controllers
 {
-    public class HomeController : ApiController
+	public class HomeController : ControllerBase
     {
         private Bitmap _receivedBitmap;
 
@@ -26,7 +24,7 @@ namespace Stego_Sample.Controllers
 				throw new HttpResponseException(HttpStatusCode.UnsupportedMediaType);
 			}
 
-			var rootDirectory = HttpContext.Current.Server.MapPath("~/Images");
+			var rootDirectory = HttpContextHelper.Current.Server.MapPath("~/Images");
 			var provider = new MultipartFormDataStreamProvider(rootDirectory);
 
 			try
